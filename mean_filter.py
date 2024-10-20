@@ -1,11 +1,13 @@
 import time
+import uuid
 import numpy as np
 import pandas as pd
 
 import altair as alt
 import streamlit as st
 
-def draw_mean_filter(mean, sigma, n_step):
+@st.fragment
+def draw_mean_filter(mean, sigma, n_step, animation=False):
     chart_row = st.empty()
 
     temp_data = pd.DataFrame()
@@ -34,7 +36,8 @@ def draw_mean_filter(mean, sigma, n_step):
 
     with st.container():
         for i in range(n_step):
-            time.sleep(1)
+            if animation:
+                time.sleep(1)
 
             # Add new data
             measure_df.loc[len(measure_df)] = [np.random.normal(mean, sigma), '测量温度']
