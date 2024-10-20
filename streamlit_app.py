@@ -51,6 +51,6 @@ st.session_state.g_h_sin.draw()
 
 data = gen_accl(0, 20, 90)
 if "g_h_accel" not in st.session_state:
-    st.session_state.g_h_accel = GH_Filter_Plot(data, sigma=10, g=0.2, h=0.02)
+    st.session_state.g_h_accel = GH_Filter_Plot(data, sigma=10)
 
-st.session_state.g_h_accel.draw()
+st.session_state.g_h_accel.draw(g=0.2, h=0.02)
