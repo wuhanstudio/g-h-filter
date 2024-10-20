@@ -22,5 +22,5 @@ $ docker run -p 8501:8501 wuhanstudio/g-h-filter
 Alternatively, you may build the Docker image by yourself.
 
 ```
-$ docker build -t wuhanstudio/g-h-filer .
+$ docker build -t wuhanstudio/g-h-filter .
 ```

@@ -1,27 +1,24 @@
 # app/Dockerfile
 
-# FROM python:3.12-slim
-FROM hdgigante/python-opencv:4.10.0-ubuntu
+FROM python:3.12-slim
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    libsm6 \
-    libxext6 \
     build-essential \
     curl \
-    python3.12-venv \
+    python3-venv \
     software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PATH="${PATH}:/root/.local/bin"
 
 RUN python3 -m venv .venv
-RUN .venv/bin/pip install opencv-python streamlit
+RUN .venv/bin/pip install pandas streamlit
 
 ADD ./streamlit_app.py /app
-ADD ./test.jpg /app
+ADD ./mean_filter.py /app
+ADD ./g_h_filter.py /app
 
 EXPOSE 8501
 
