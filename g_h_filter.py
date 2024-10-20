@@ -36,10 +36,10 @@ class GH_Filter_Plot():
         self.animation_uuid = uuid.uuid4()
 
     @st.fragment
-    def draw(self):
+    def draw(self, g=0.6, h=0.1):
         self.animation = st.toggle("Activate animation", key=self.animation_uuid)
-        self.g = st.slider("g value", min_value=0.0, max_value=1.0, value=0.6, step=0.01, key=self.g_uuid)
-        self.h = st.slider("h value", min_value=0.0, max_value=1.0, value=0.1, step=0.01, key=self.h_uuid)
+        self.g = st.slider("g value", min_value=0.0, max_value=1.0, value=g, step=0.01, key=self.g_uuid)
+        self.h = st.slider("h value", min_value=0.0, max_value=1.0, value=h, step=0.01, key=self.h_uuid)
 
         self.g_h_filter = GH_Filter(self.data[0], 0.0, self.g, self.h, 1)
 
@@ -80,7 +80,7 @@ class GH_Filter_Plot():
                     .transform_fold(['环境温度'])
                     .mark_line(color='black')
                     .encode(x=alt.X("index", title='时间', axis=alt.Axis(tickCount=n_step), scale=alt.Scale(domain=[0, n_step])), 
-                            y=alt.Y("temperature", title='温度', scale=alt.Scale(domain=[np.min(self.data) - 10, np.max(self.data) + 10])),
+                            y=alt.Y("temperature", title='温度', scale=alt.Scale(domain=[np.min(self.data) - 3*self.sigma, np.max(self.data) + 3*self.sigma])),
                             # color=alt.value('black'),
                             color='类别:N'
                     )
@@ -92,7 +92,7 @@ class GH_Filter_Plot():
                     .transform_fold(['测量温度'])
                     .mark_point(opacity=1.0, color='red', shape='cross', size=50)
                     .encode(x=alt.X("index", title='时间', axis=alt.Axis(tickCount=n_step), scale=alt.Scale(domain=[0, n_step])), 
-                            y=alt.Y("measurement", title='温度', scale=alt.Scale(domain=[np.min(self.data) - 10, np.max(self.data) + 10])),
+                            y=alt.Y("measurement", title='温度', scale=alt.Scale(domain=[np.min(self.data) - 3*self.sigma, np.max(self.data) + 3*self.sigma])),
                             # color=alt.value('black'),
                             color='类别:N',
                     )
@@ -104,7 +104,7 @@ class GH_Filter_Plot():
                     .transform_fold(['g-h 滤波'])
                     .mark_line(opacity=0.6, color='black', strokeDash=[10,1], point=alt.OverlayMarkDef(filled=False, fill="white"))
                     .encode(x=alt.X("index", title='时间', axis=alt.Axis(tickCount=n_step), scale=alt.Scale(domain=[0, n_step])), 
-                            y=alt.Y("estimation", title='温度', scale=alt.Scale(domain=[np.min(self.data) - 10, np.max(self.data) + 10])),
+                            y=alt.Y("estimation", title='温度', scale=alt.Scale(domain=[np.min(self.data) - 3*self.sigma, np.max(self.data) + 3*self.sigma])),
                             # color=alt.value('black'),
                             color='类别:N',
                     )
